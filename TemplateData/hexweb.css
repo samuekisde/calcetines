@@ -38,10 +38,20 @@ html, body {
   -webkit-text-size-adjust: 100%;
 }
 
-/* Full bleed, under the island and the home indicator. The HUD's safe area is the game's job. */
-#stage {
+/* The page never scrolls: Safari scrolling a landscape page to tuck its toolbar away was one way
+   the game ended up short of the bottom of the screen. */
+html, body {
   position: fixed;
   inset: 0;
+}
+
+/* Full bleed, under the island and the home indicator. The HUD's safe area is the game's job.
+   These are the first guess; hexweb.js sets the exact pixel size of the visible area (Safari's
+   own units are wrong for a moment after a landscape load, which left a white band below). */
+#stage {
+  position: fixed;
+  left: 0;
+  top: 0;
   width: 100vw;
   height: 100vh;
   height: 100dvh;
