@@ -101,6 +101,52 @@
   // Safari's back/forward cache restores a frozen page without reloading it.
   window.addEventListener("pageshow", function () { setVisible(true); });
 
+  // ---------------------------------------------------------------- the stage fills the visible page
+
+  // iOS Safari, loading in landscape, reports a viewport that is too short until something
+  // resizes the page (rotating fixed it), and the game drew short of the bottom with a white band
+  // under it. So the stage is sized here, in pixels, to what is actually visible: on load, on
+  // every resize, rotation and toolbar change, a few times just after each, and once a second as
+  // a net for the cases that fire nothing.
+  var stageSize = [0, 0];
+
+  function visibleSize() {
+    var w = window.innerWidth, h = window.innerHeight;
+    var vv = window.visualViewport;
+    // The visual viewport is the truer size while it is not zoomed (it follows the toolbars).
+    if (vv && Math.abs(vv.scale - 1) < 0.01 && vv.width > 0 && vv.height > 0) {
+      w = vv.width;
+      h = vv.height;
+    }
+    return [Math.round(w), Math.round(h)];
+  }
+
+  function fitStage() {
+    var stage = document.getElementById("stage");
+    if (!stage) return;
+    if (window.scrollX || window.scrollY) window.scrollTo(0, 0);
+    var size = visibleSize();
+    if (size[0] === stageSize[0] && size[1] === stageSize[1]) return;
+    stageSize = size;
+    stage.style.width = size[0] + "px";
+    stage.style.height = size[1] + "px";
+  }
+
+  function fitStageSoon() {
+    fitStage();
+    [60, 250, 600, 1200].forEach(function (ms) { setTimeout(fitStage, ms); });
+  }
+
+  window.addEventListener("resize", fitStageSoon);
+  window.addEventListener("orientationchange", fitStageSoon);
+  window.addEventListener("pageshow", fitStageSoon);
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", fitStageSoon);
+    window.visualViewport.addEventListener("scroll", fitStage);
+  }
+  document.addEventListener("DOMContentLoaded", fitStageSoon);
+  setInterval(fitStage, 1000);
+
   // ---------------------------------------------------------------- gestures the browser must not take
 
   document.addEventListener("gesturestart", function (e) { e.preventDefault(); }, { passive: false });
@@ -497,6 +543,8 @@
       "fps " + fps.toFixed(1) + "   worst " + worst.toFixed(0) + " ms",
       "wasm heap " + heap + "   js heap " + js,
       "css " + window.innerWidth + "x" + window.innerHeight + "   dpr " + (window.devicePixelRatio || 1) + "   render x" + renderPixelRatio(),
+      "visual " + (window.visualViewport ? Math.round(window.visualViewport.width) + "x" + Math.round(window.visualViewport.height) : "n/a") +
+        "   stage " + stageSize[0] + "x" + stageSize[1] + "   screen " + screen.width + "x" + screen.height,
       "canvas " + (c ? c.width + "x" + c.height : "?"),
       "safe css L" + sa[0] + " T" + sa[1] + " R" + sa[2] + " B" + sa[3],
       "ios " + isIOS + "   standalone " + isStandalone() + "   hidden x" + hiddenCount,

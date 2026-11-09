@@ -2,10 +2,10 @@
     "files":  [
                   "index.html",
                   "manifest.webmanifest",
-                  "Build/30c0f9bb9654d5fbcd976e81eb9b68b8.data.unityweb",
-                  "Build/380fce75d342db9a9da262093b2d0ef1.wasm.unityweb",
+                  "Build/8432e98c387b33f89e01f18c92036e39.wasm.unityweb",
                   "Build/970e7006564ec02e82e2e1f888e59afd.framework.js.unityweb",
-                  "Build/b6644bd64c3d1bba03d67b720514add4.loader.js",
+                  "Build/a8eb48beb756a63dd054a8fe086c30ea.data.unityweb",
+                  "Build/b2be5fb4901fe31a181c578e6cfe1452.loader.js",
                   "StreamingAssets/UnityServicesProjectConfiguration.json",
                   "TemplateData/hexweb.css",
                   "TemplateData/hexweb.js",
