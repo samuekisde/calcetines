@@ -1,0 +1,18 @@
+﻿{
+    "files":  [
+                  "index.html",
+                  "manifest.webmanifest",
+                  "Build/36386a6378064e4782a08a3359fa4706.loader.js",
+                  "Build/970e7006564ec02e82e2e1f888e59afd.framework.js.unityweb",
+                  "Build/af369136e515260e082ba06b7eda6fb6.wasm.unityweb",
+                  "Build/b0a0b71ea478ca6b0d58c96730fa5714.data.unityweb",
+                  "StreamingAssets/UnityServicesProjectConfiguration.json",
+                  "TemplateData/hexweb.css",
+                  "TemplateData/hexweb.js",
+                  "TemplateData/icon-180.png",
+                  "TemplateData/icon-192.png",
+                  "TemplateData/icon-512.png",
+                  "TemplateData/nunito-extrabold.ttf",
+                  "TemplateData/title.png"
+              ]
+}
