@@ -11,6 +11,19 @@
   "use strict";
 
   var params = new URLSearchParams(window.location.search);
+
+  // An invite (?join=CODE) is used once: the game reads it from `params`, and the address bar
+  // forgets it, so a reload, the failure panel's Reload, or adding the page to the Home Screen
+  // never joins an old table again.
+  (function forgetInvite() {
+    if (!params.has("join") || !window.history || !history.replaceState) return;
+    var rest = new URLSearchParams(window.location.search);
+    rest.delete("join");
+    var query = rest.toString();
+    try {
+      history.replaceState(history.state, "", window.location.pathname + (query ? "?" + query : "") + window.location.hash);
+    } catch (e) {}
+  })();
   var ua = navigator.userAgent || "";
 
   // iPadOS reports itself as a Mac; the touch points give it away.
