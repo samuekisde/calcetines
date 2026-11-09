@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- viewport-fit=cover lets the game draw under the Dynamic Island; the HUD keeps clear of it by
+       reading env(safe-area-inset-*) through HexWeb. user-scalable=no: a pinch is a game gesture. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Hexatone">
+  <meta name="theme-color" content="#F4F9FC">
+  <meta name="format-detection" content="telephone=no">
+  <title>Hexatone</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="TemplateData/icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="TemplateData/icon-192.png">
+  <link rel="stylesheet" href="TemplateData/hexweb.css">
+  <script src="TemplateData/hexweb.js"></script>
+</head>
+<body>
+  <!-- Measures env(safe-area-inset-*) for HexWeb; never visible. -->
+  <div id="safe-probe" aria-hidden="true"></div>
+
+  <div id="stage">
+    <canvas id="unity-canvas" tabindex="-1"></canvas>
+  </div>
+
+  <div id="loader" role="status" aria-live="polite">
+    <img id="loader-title" src="TemplateData/title.png" alt="Hexatone">
+    <div id="loader-bar"><div id="loader-fill"></div></div>
+    <div id="loader-note" data-en="Loading…" data-es="Cargando…"></div>
+  </div>
+
+  <!-- The family password, asked once per device before anything is downloaded. Only present
+       when the deploy script wrote a gate into this page (Tools/Web/deploy.ps1 -Password). -->
+  <div id="gate" hidden>
+    <form id="gate-form" class="panel" autocomplete="off" novalidate>
+      <img class="gate-title" src="TemplateData/title.png" alt="Hexatone">
+      <label for="gate-input" data-en="Family password" data-es="Contraseña de la familia"></label>
+      <input id="gate-input" type="password" autocomplete="current-password" autocapitalize="off"
+             autocorrect="off" spellcheck="false" enterkeyhint="go">
+      <button id="gate-play" type="submit" data-en="Play" data-es="Jugar"></button>
+      <p id="gate-error" hidden data-en="That's not it. Try again." data-es="No es esa. Prueba otra vez."></p>
+    </form>
+  </div>
+
+  <div id="failure" hidden>
+    <div class="panel">
+      <p id="failure-text" data-en="The game couldn't start." data-es="El juego no ha podido arrancar."></p>
+      <button id="failure-reload" type="button" data-en="Reload" data-es="Recargar"></button>
+      <pre id="failure-detail"></pre>
+    </div>
+  </div>
+
+  <!-- Portrait: deliberately just a turn glyph, no words. The game is landscape only. -->
+  <div id="portrait" aria-hidden="true">
+    <svg viewBox="0 0 64 64" width="72" height="72">
+      <rect x="20" y="8" width="24" height="40" rx="5" fill="none" stroke="currentColor" stroke-width="3"/>
+      <path d="M50 30 a18 18 0 0 1 -6 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <path d="M38 52 l6 2 l1 -6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <div id="home-hint" hidden>
+    <span class="hint-text">
+      <span data-en="Play full screen: tap" data-es="Para pantalla completa: pulsa"></span>
+      <svg class="share-glyph" viewBox="0 0 24 24" width="18" height="18" aria-label="Share">
+        <path d="M12 3v12M7.5 7.5 12 3l4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6 11H5v9h14v-9h-1" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <span data-en="then “Add to Home Screen”" data-es="y luego “Añadir a pantalla de inicio”"></span>
+    </span>
+    <button id="home-hint-close" type="button" aria-label="Close">✕</button>
+  </div>
+
+  <script>
+    // Written by Tools/Web/deploy.ps1: { "salt": "...", "hash": "sha-256 hex" }, or null for none.
+    window.HexWebGate = /*HEXWEB_GATE*/{"salt":"fde18ea87cf29b047fd4b234f6bd912f","hash":"cb494727271b8288ddce807135a983b61ec610bea1bffeec21f4021b0b62ad5e"};
+  </script>
+  <script>
+    HexWeb.localise(document);
+
+    var canvas = document.querySelector("#unity-canvas");
+    var buildUrl = "Build";
+    var config = {
+      arguments: [],
+      dataUrl: buildUrl + "/a4a29113b10f06e615a7f1aaac199d2c.data.unityweb",
+      frameworkUrl: buildUrl + "/970e7006564ec02e82e2e1f888e59afd.framework.js.unityweb",
+      codeUrl: buildUrl + "/f88c62b58b7e171492568892d0977b0f.wasm.unityweb",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "Samu_Noa",
+      productName: "secreto",
+      productVersion: "2026.11.09.2002-9f9a88d+local",
+      // The render scale. Phones report 3; rendering every one of those pixels is the single
+      // biggest cost on a phone GPU. HexWeb picks it (and ?dpr= overrides it for measuring).
+      devicePixelRatio: HexWeb.renderPixelRatio(),
+      showBanner: function (msg, type) {
+        if (type === "error") HexWeb.fail(msg);
+        else console.warn(msg);
+      },
+    };
+
+    HexWeb.gate(function () {
+      HexWeb.boot(canvas, buildUrl + "/0dabb428fb407586e3ca8ba7cc366705.loader.js", config);
+    });
+  </script>
+</body>
+</html>
