@@ -100,12 +100,6 @@ html, body {
   pointer-events: none;
 }
 
-#loader-title {
-  /* Trimmed to the word by Tools/Web/build_web_assets.py. */
-  width: min(56vw, 640px);
-  height: auto;
-}
-
 #loader-bar {
   width: min(44vw, 420px);
   height: 12px;
@@ -159,8 +153,6 @@ html, body {
   box-shadow: 0 0 0 3px #BFE3F2, 0 12px 30px rgba(24, 54, 78, 0.22);
 }
 
-#gate .gate-title { width: 74%; height: auto; margin-bottom: 2px; }
-
 #gate label { font-size: 15px; color: var(--heading); letter-spacing: 0.02em; }
 
 #gate-input {
@@ -213,7 +205,6 @@ html, body {
 /* A landscape phone is short: keep the form on screen with the keyboard up. */
 @media (max-height: 440px) {
   #gate .panel { gap: 8px; padding: 14px 22px 16px; }
-  #gate .gate-title { width: 56%; }
 }
 
 /* ------------------------------------------------------------------ failure */

@@ -2,17 +2,16 @@
     "files":  [
                   "index.html",
                   "manifest.webmanifest",
-                  "Build/8432e98c387b33f89e01f18c92036e39.wasm.unityweb",
+                  "Build/5d396731ff2abc0f0817187aaae765a8.loader.js",
+                  "Build/8e2ef778c76a422e4349dd7ca63d4723.data.unityweb",
                   "Build/970e7006564ec02e82e2e1f888e59afd.framework.js.unityweb",
-                  "Build/a8eb48beb756a63dd054a8fe086c30ea.data.unityweb",
-                  "Build/b2be5fb4901fe31a181c578e6cfe1452.loader.js",
+                  "Build/b0ebde8f4ad94c8a5374ce038d87fea1.wasm.unityweb",
                   "StreamingAssets/UnityServicesProjectConfiguration.json",
                   "TemplateData/hexweb.css",
                   "TemplateData/hexweb.js",
                   "TemplateData/icon-180.png",
                   "TemplateData/icon-192.png",
                   "TemplateData/icon-512.png",
-                  "TemplateData/nunito-extrabold.ttf",
-                  "TemplateData/title.png"
+                  "TemplateData/nunito-extrabold.ttf"
               ]
 }
