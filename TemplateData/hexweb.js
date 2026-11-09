@@ -35,12 +35,12 @@
                              window.matchMedia("(display-mode: fullscreen)").matches));
   }
 
-  // The page's language: what the address asks for, else what the game last chose, else the
-  // browser's.
+  // The page's language: what the address asks for (?lang=es), else what the game last chose,
+  // else English - the game opens in English (owner), whatever the phone's language.
   var lang = (function () {
     var stored = null;
     try { stored = localStorage.getItem("hexweb.lang"); } catch (e) {}
-    var raw = params.get("lang") || stored || navigator.language || "en";
+    var raw = params.get("lang") || stored || "en";
     return raw.toLowerCase().indexOf("es") === 0 ? "es" : "en";
   })();
 
@@ -513,7 +513,7 @@
     }
     button("Copy logs", function () { copyText(report()); });
     button("Share logs", function () {
-      if (navigator.share) navigator.share({ title: "Hexatone logs", text: report() }).catch(function () {});
+      if (navigator.share) navigator.share({ title: "Logs", text: report() }).catch(function () {});
       else copyText(report());
     });
     button("Hide", function () { box.remove(); });

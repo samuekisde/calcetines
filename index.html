@@ -8,10 +8,10 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Hexatone">
+  <meta name="apple-mobile-web-app-title" content="Calcetines">
   <meta name="theme-color" content="#F4F9FC">
   <meta name="format-detection" content="telephone=no">
-  <title>Hexatone</title>
+  <title>Calcetines</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="TemplateData/icon-180.png">
   <link rel="icon" type="image/png" sizes="192x192" href="TemplateData/icon-192.png">
@@ -26,8 +26,8 @@
     <canvas id="unity-canvas" tabindex="-1"></canvas>
   </div>
 
+  <!-- Nothing here names the game: it is a surprise until it has loaded (a birthday gift). -->
   <div id="loader" role="status" aria-live="polite">
-    <img id="loader-title" src="TemplateData/title.png" alt="Hexatone">
     <div id="loader-bar"><div id="loader-fill"></div></div>
     <div id="loader-note" data-en="Loading…" data-es="Cargando…"></div>
   </div>
@@ -36,7 +36,6 @@
        when the deploy script wrote a gate into this page (Tools/Web/deploy.ps1 -Password). -->
   <div id="gate" hidden>
     <form id="gate-form" class="panel" autocomplete="off" novalidate>
-      <img class="gate-title" src="TemplateData/title.png" alt="Hexatone">
       <label for="gate-input" data-en="Family password" data-es="Contraseña de la familia"></label>
       <input id="gate-input" type="password" autocomplete="current-password" autocapitalize="off"
              autocorrect="off" spellcheck="false" enterkeyhint="go">
@@ -85,13 +84,13 @@
     var buildUrl = "Build";
     var config = {
       arguments: [],
-      dataUrl: buildUrl + "/1c1ae397c2e9bf6613a8b547d627c291.data.unityweb",
+      dataUrl: buildUrl + "/8e2ef778c76a422e4349dd7ca63d4723.data.unityweb",
       frameworkUrl: buildUrl + "/970e7006564ec02e82e2e1f888e59afd.framework.js.unityweb",
-      codeUrl: buildUrl + "/8432e98c387b33f89e01f18c92036e39.wasm.unityweb",
+      codeUrl: buildUrl + "/b0ebde8f4ad94c8a5374ce038d87fea1.wasm.unityweb",
       streamingAssetsUrl: "StreamingAssets",
       companyName: "Samu_Noa",
       productName: "secreto",
-      productVersion: "2026.11.09.2252-9f9a88d+local",
+      productVersion: "2026.11.09.2308-9f9a88d+local",
       // The render scale. Phones report 3; rendering every one of those pixels is the single
       // biggest cost on a phone GPU. HexWeb picks it (and ?dpr= overrides it for measuring).
       devicePixelRatio: HexWeb.renderPixelRatio(),
@@ -102,7 +101,7 @@
     };
 
     HexWeb.gate(function () {
-      HexWeb.boot(canvas, buildUrl + "/b2be5fb4901fe31a181c578e6cfe1452.loader.js", config);
+      HexWeb.boot(canvas, buildUrl + "/5d396731ff2abc0f0817187aaae765a8.loader.js", config);
     });
   </script>
 </body>
